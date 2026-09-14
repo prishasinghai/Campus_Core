@@ -214,7 +214,7 @@ with col_right:
         edited_asg = st.data_editor(df_asg, num_rows="dynamic", use_container_width=True, key=f"asg_ed_{selected_stream}")
         st.session_state.assignments_store[selected_stream] = edited_asg["Current Homework"].tolist()
         
-       with c3:
+    with c3:
         st.markdown("#### 📅 Deadlines / Calendar")
         st.caption("💖 Modify or append rows directly:")
         df_dl = pd.DataFrame({"Target Deadlines": st.session_state.deadlines_store[selected_stream]})
