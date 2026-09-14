@@ -24,7 +24,7 @@ if "deadlines_store" not in st.session_state:
         "🍿 Group 5: Block-A Third Floor Wing-Mates": ["Pizza Money Collection deadline (Saturday 6 PM)", "Movie Night begins (Saturday 9:30 PM)"]
     }
 
-# --- GLOBAL STYLING: COMPACT FONTS & MAGENTA TYPOGRAPHY ---
+# --- GLOBAL STYLING: COMPACT FONTS, PINK WORKSPACE & BLACK TEXT ---
 st.markdown("""
     <style>
     /* Global Core Framework Overrides with smaller fonts */
@@ -33,18 +33,19 @@ st.markdown("""
         font-size: 0.85rem !important;
     }
     
-    /* Top Professional University Styled Navbar */
+    /* Top Professional University Styled Navbar - Text Changed to Black */
     .custom-navbar {
-        background-color: #4A1525; /* Dark Plum Crimson */
+        background-color: #FFB6C1; /* Light Pink Accent instead of dark plum */
         padding: 0.5rem 1.5rem;
         display: flex;
         align-items: center;
         justify-content: space-between;
         border-radius: 12px;
         margin-bottom: 1rem;
+        border: 1px solid #FF69B4;
     }
     .navbar-brand {
-        color: #FFFFFF !important;
+        color: #000000 !important; /* FORCED BLACK FONTS */
         font-weight: 700;
         font-size: 1.1rem;
         display: flex;
@@ -55,14 +56,14 @@ st.markdown("""
         display: flex;
         align-items: center;
         gap: 0.75rem;
-        color: #FFFFFF !important;
+        color: #000000 !important; /* FORCED BLACK FONTS */
         font-size: 0.85rem;
     }
     .avatar {
         width: 30px;
         height: 30px;
         background-color: #FF69B4;
-        color: white !important;
+        color: #000000 !important; /* FORCED BLACK FONTS ON AVATAR TEXT */
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -118,7 +119,7 @@ st.markdown("""
         font-size: 0.75rem !important;
     }
     div[data-testid="stMetricValue"] {
-        color: #FF00FF !important; /* MAGENTA FOR METRIC VALUE VALUE */
+        color: #FF00FF !important; /* MAGENTA FOR METRIC VALUE */
         font-weight: 800 !important;
         font-size: 1.4rem !important;
     }
@@ -135,6 +136,7 @@ st.markdown("""
         padding: 0.75rem !important;
     }
     
+    /* Forcing clean text sizing inside information boards */
     .stDataFrame, div[data-testid="stTable"] {
         font-size: 0.8rem !important;
     }
@@ -168,7 +170,7 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-# --- 3. METRIC QUICK PINS GRID (CGPA value color controlled via injection script above) ---
+# --- 3. METRIC QUICK PINS GRID ---
 m1, m2, m3, m4 = st.columns(4)
 with m1:
     st.metric(label="🎯 Target Semester CGPA", value="8.5 / 10")
@@ -181,8 +183,8 @@ with m4:
 
 st.markdown("---")
 
-# --- 4. STREAM LAYOUT ENGINE (Split Grid setup) ---
-col_left, col_right = st.columns([1, 2]) # Keeps sidebar compact, makes dashboard workspace wide
+# --- 4. STREAM LAYOUT ENGINE ---
+col_left, col_right = st.columns()
 
 with col_left:
     st.markdown("### 🎛️ Feed Stream Triage")
@@ -199,7 +201,7 @@ with col_left:
     audio_input = st.audio_input("Record Voice Action Command")
     
     # Text helper entry box
-    voice_command = st.text_input("Or input spoke phrase action phrase directly:", placeholder="e.g., Submit lab file at 10 AM")
+    voice_command = st.text_input("Or input spoken phrase action directly:", placeholder="e.g., Submit lab file at 10 AM")
     
     if st.button("⚡ Execute Command Direct to Calendar", use_container_width=True):
         if voice_command:
@@ -226,13 +228,16 @@ with col_right:
         "🍔 Group 2: Hostel Block-A Banter & Mess": "The Warden issued a clean-room directive for an active inspection happening later tonight. The community is gathering votes to adjust the culinary selections.",
         "🤖 Group 3: AI/ML Student Club (Un-Official)": "The Lead Developer issued a final reminder for upcoming competitive hackathon registrations. The core group sync time was finalized.",
         "🎨 Group 4: Cultural Fest Core Committee '26": "Volunteers are needed urgently to handle logistics for the introductory winter carnival night. Design work templates are open.",
+    chat_summaries = {
+        "✨ Group 1: Official CS Freshmen Batch '26": "CR Rahul announced a mandatory guest lecture for today. Professor Mehta provided syllabus details regarding an upcoming lab evaluation.",
+        "🍔 Group 2: Hostel Block-A Banter & Mess": "The Warden issued a clean-room directive for an active inspection happening later tonight. The community is gathering votes to adjust the culinary selections.",
+        "🤖 Group 3: AI/ML Student Club (Un-Official)": "The Lead Developer issued a final reminder for upcoming competitive hackathon registrations. The core group sync time was finalized.",
+        "🎨 Group 4: Cultural Fest Core Committee '26": "Volunteers are needed urgently to handle logistics for the introductory winter carnival night. Design work templates are open.",
         "🍿 Group 5: Block-A Third Floor Wing-Mates": "Hostel residents are pooling orders for weekend food delivery and planning a movie night in the common room lounge area."
     }
 
     st.markdown("### 📊 Live Information Matrix Board")
     
-    # ROW 1 OF MATRIX
-    r1_c1, r1_c2 = st.columns(2)
     # ROW 1 OF MATRIX
     r1_c1, r1_c2 = st.columns(2)
     with r1_c1:
@@ -260,3 +265,4 @@ with col_right:
     with r2_c2:
         st.markdown("#### 🔗 Links to Join")
         st.markdown(chat_links[selected_stream])
+
