@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-from datetime import datetime
 
 # Configure page settings
 st.set_page_config(page_title="College Sync: Portal Triage Hub", page_icon="💖", layout="wide")
@@ -24,28 +23,28 @@ if "deadlines_store" not in st.session_state:
         "🍿 Group 5: Block-A Third Floor Wing-Mates": ["Pizza Money Collection deadline (Saturday 6 PM)", "Movie Night begins (Saturday 9:30 PM)"]
     }
 
-# --- GLOBAL STYLING: OFF-WHITE BACKGROUND, DARK BROWN & MAGENTA FONTS ---
+# --- GLOBAL STYLING: OFF-WHITE BACKGROUND, DARK BROWN & EXPLICIT BAR HEADER ---
 st.markdown("""
     <style>
-    /* Global Core Framework Overrides - Off-White & Dark Brown Base */
+    /* Global Core Framework Overrides - Premium Warm Off-White */
     .stApp {
-        background-color: #FAF9F6 !important; /* Premium Off-White/Ivory Background */
+        background-color: #FAF9F6 !important;
         font-size: 0.85rem !important;
     }
     
-    /* Top Professional University Styled Navbar - Dark Brown background with off-white text */
+    /* Top Professional University Styled Navbar - Matched Exactly to Your Image */
     .custom-navbar {
-        background-color: #e81376; /* Elegant Dark Brown */
-        padding: 0.5rem 1.5rem;
+        background-color: #cf0864 !important; /* Solid vibrant pink background */
+        padding: 0.75rem 2rem;
         display: flex;
         align-items: center;
         justify-content: space-between;
         border-radius: 12px;
         margin-bottom: 1rem;
-        border: 1px solid #2B180E;
+        border: none !important;
     }
     .navbar-brand {
-        color: #f7e4dc!important; /* Off-White Text */
+        color: #FFFFFF !important; /* Bold White Title Text */
         font-weight: 700;
         font-size: 1.1rem;
         display: flex;
@@ -56,26 +55,27 @@ st.markdown("""
         display: flex;
         align-items: center;
         gap: 0.75rem;
-        color: #FAF9F6 !important; /* Off-White Text */
+        color: #000000 !important; /* Black Welcome text to match your image */
         font-size: 0.85rem;
+        font-weight: 600;
     }
     .avatar {
-        width: 30px;
-        height: 30px;
-        background-color: #FF00FF; /* Magenta Avatar Circle */
-        color: #000000 !important;
+        width: 32px;
+        height: 32px;
+        background-color: #000000 !important; /* Black circular avatar badge */
+        color: #FFFFFF !important; /* White FS initials */
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         font-weight: bold;
-        font-size: 0.8rem;
+        font-size: 0.85rem;
     }
     
-    /* Custom Card Containers resembling the University Portal UI layout */
+    /* Portal header message card box */
     div.portal-header-box {
         background-color: #FFFFFF;
-        border: 1px solid #D2B48C; /* Light Tan/Brown Border */
+        border: 1px solid #D2B48C;
         border-radius: 12px;
         padding: 1rem 1.5rem;
         margin-bottom: 1rem;
@@ -85,40 +85,39 @@ st.markdown("""
         box-shadow: 0 4px 6px rgba(61, 35, 20, 0.05);
     }
     div.portal-header-box h2 {
-        color: #FF00FF !important; /* MAGENTA MAIN HEADING */
+        color: #cf0864 !important; /* RASPBERRY TITLE */
         font-size: 1.2rem !important;
         margin: 0;
     }
     div.portal-header-box p {
-        color: #5C4033 !important; /* Dark Brown Subtext */
+        color: #5C4033 !important;
     }
     
     .status-dot {
         height: 8px;
         width: 8px;
-        background-color: #FF00FF; /* Magenta Sync Dot */
+        background-color: #cf0864;
         border-radius: 50%;
         display: inline-block;
         margin-right: 6px;
     }
     
-    /* Global Typography Overrides to MAGENTA & DARK BROWN */
+    /* Typography Global Rules forced to deep Raspberry #cf0864 */
     h1, h2, h3, h4, h5, h6 {
-        color: #FF00FF !important; /* MAGENTA FOR SUBHEADINGS */
+        color: #cf0864 !important;
         font-weight: 700 !important;
     }
     h3 { font-size: 1.1rem !important; }
-    h4 { font-size: 0.95rem !important; }
+    h4 { font-size: 0.95rem !important; margin-bottom: 0.5rem !important;}
     
-    /* Base text blocks, paragraph configurations default to Dark Brown */
     p, span, label, div {
-        color: #3D2314 !important; /* Dark Brown Text */
+        color: #3D2314 !important; /* Base texts default to Dark Brown */
     }
     
-        /* Streamlit Metric Card Container & Text Customization */
+    /* Streamlit Metric Card Container & Text Customization matching #8f043e */
     div[data-testid="stMetric"] {
         background-color: #FFFFFF !important;
-        border: 2px solid #3D2314 !important; /* Changes the card border to your berry color */
+        border: 2px solid #8f043e !important; /* Changes the card border to your berry color */
         border-radius: 15px !important;
         padding: 10px !important;
     }
@@ -127,7 +126,7 @@ st.markdown("""
     div[data-testid="stMetricLabel"] > div, 
     div[data-testid="stMetricLabel"] span, 
     div[data-testid="stMetricLabel"] p {
-        color: #3D2314 !important; 
+        color: #8f043e !important; 
         font-size: 0.75rem !important;
     }
     
@@ -138,34 +137,39 @@ st.markdown("""
         font-size: 1.4rem !important;
     }
 
-
-    /* Styling Alert Info Blocks to soft tint and dark brown text */
-    .stAlert div, .stAlert p {
-        font-size: 0.825rem !important;
-        color: #8f043e !important; /* Dark Brown */
+    /* Darker Off-White Structured Background Framing Rectangles for Matrix Pairs */
+    div.matrix-paired-card {
+        background-color: #EFECE6 !important; /* Darker off-white shading box tint */
+        border: 1px solid #D1C9BC !important;
+        border-radius: 16px !important;
+        padding: 20px !important;
+        margin-bottom: 1.5rem !important;
+        box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);
     }
+
+    /* Soft Alert Box settings */
     .stAlert {
-        background-color: #F5F5DC !important; /* Beige/Soft Tint Alert box */
-        border-left: 5px solid #FF00FF !important; /* Magenta Accent Strip */
-        border-radius: 10px;
+        background-color: #FFFFFF !important; 
+        border-left: 5px solid #cf0864 !important;
+        border-radius: 8px;
         padding: 0.75rem !important;
     }
     
-    /* Data frames custom styles matching layout fonts */
     .stDataFrame, div[data-testid="stTable"] {
         font-size: 0.8rem !important;
     }
     .stCaption {
         font-size: 0.75rem !important;
-        color: #5C4033 !important; /* Muted Dark Brown Captions */
+        color: #5C4033 !important;
     }
     
-    /* Submit action button custom override */
+    /* Navigation execute functional button override */
     div.stButton > button:first-child {
-        background-color: #FF00FF !important; /* Magenta Buttons */
+        background-color: #cf0864 !important;
         color: #FFFFFF !important;
         border: none !important;
         border-radius: 8px;
+        font-weight: bold;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -186,7 +190,7 @@ st.markdown("""
     <div class="portal-header-box">
         <div>
             <h2>💗 College Sync Dashboard</h2>
-            <p style="margin: 0; font-size: 0.8rem;">Automated Local Filtering & Command Matrix Overview</p>
+            <p style="margin: 0; font-size: 0.8rem;">Automated Local Filtering & Pair Container Matrix Overview</p>
         </div>
         <div style="font-size: 0.8rem; color: #3D2314;">
             <span class="status-dot"></span>Active Simulation Feed Connected
@@ -207,8 +211,8 @@ with m4:
 
 st.markdown("---")
 
-# --- 4. STREAM LAYOUT ENGINE (Fixed with required sizing values) ---
-col_left, col_right = st.columns([1, 2]) # 1 unit wide left sidebar, 2 units wide right matrix workspace
+# --- 4. STREAM LAYOUT ENGINE ---
+col_left, col_right = st.columns([1, 2])
 
 with col_left:
     st.markdown("### 🎛️ Feed Stream Triage")
@@ -230,14 +234,13 @@ with col_left:
     if st.button("⚡ Execute Command Direct to Calendar", use_container_width=True):
         if voice_command:
             clean_cmd = voice_command.strip()
-            # Directly appends everything to deadlines list without extra checks
             st.session_state.deadlines_store[selected_stream].append(clean_cmd)
             st.success(f"Successfully dropped directly to your Calendar matrix!")
             st.rerun()
         else:
             st.warning("Please input or speak an entry block first.")
 
-# --- 5. THE 2x2 VISUAL INFORMATION MATRIX HUB ---
+# --- 5. THE PAIRED STRUCTURAL INFORMATION CONNECTIONS HUB ---
 with col_right:
     chat_links = {
         "✨ Group 1: Official CS Freshmen Batch '26": "• [🌐 Join Google Meet](https://google.com)\n• [💬 Join WhatsApp Subgroup](https://whatsapp.com)",
@@ -257,31 +260,35 @@ with col_right:
 
     st.markdown("### 📊 Live Information Matrix Board")
     
-    # ROW 1 OF MATRIX
-    r1_c1, r1_c2 = st.columns(2)
-    with r1_c1:
+    # Define two main columns for our paired boxes
+    card_col1, card_col2 = st.columns(2)
+    
+    # COLUMN PAIR 1: SUMMARY & CALENDAR
+    with card_col1:
+        st.markdown('<div class="matrix-paired-card">', unsafe_allow_html=True)
         st.markdown("#### 📝 Chat Summary")
         st.info(chat_summaries[selected_stream])
         
-    with r1_c2:
+        st.markdown("<br>", unsafe_allow_html=True)
+        
+        st.markdown("#### 📅 Deadlines / Calendar")
+        st.caption("💖 Modify or append rows:")
+        df_dl = pd.DataFrame({"Target Deadlines": st.session_state.deadlines_store[selected_stream]})
+        edited_dl = st.data_editor(df_dl, num_rows="dynamic", use_container_width=True, key=f"dl_ed_{selected_stream}")
+        st.session_state.deadlines_store[selected_stream] = edited_dl["Target Deadlines"].tolist()
+        st.markdown('</div>', unsafe_allow_html=True)
+        
+    # COLUMN PAIR 2: ASSIGNMENTS & LINKS
+    with card_col2:
+        st.markdown('<div class="matrix-paired-card">', unsafe_allow_html=True)
         st.markdown("#### 📚 Assignments")
         st.caption("💖 Double-click below to modify rows:")
         df_asg = pd.DataFrame({"Current Homework": st.session_state.assignments_store[selected_stream]})
         edited_asg = st.data_editor(df_asg, num_rows="dynamic", use_container_width=True, key=f"asg_ed_{selected_stream}")
         st.session_state.assignments_store[selected_stream] = edited_asg["Current Homework"].tolist()
         
-    st.markdown("<br>", unsafe_allow_html=True) # Adds vertical block separation space
-    
-    # ROW 2 OF MATRIX
-    r2_c1, r2_c2 = st.columns(2)
-    with r2_c1:
-        st.markdown("#### 📅 Deadlines / Calendar")
-        st.caption("💖 Modify or append rows:")
-        df_dl = pd.DataFrame({"Target Deadlines": st.session_state.deadlines_store[selected_stream]})
-        edited_dl = st.data_editor(df_dl, num_rows="dynamic", use_container_width=True, key=f"dl_ed_{selected_stream}")
-        st.session_state.deadlines_store[selected_stream] = edited_dl["Target Deadlines"].tolist()
+        st.markdown("<br>", unsafe_allow_html=True)
         
-    with r2_c2:
         st.markdown("#### 🔗 Links to Join")
         st.markdown(chat_links[selected_stream])
-
+        st.markdown('</div>', unsafe_allow_html=True)
