@@ -115,22 +115,29 @@ st.markdown("""
         color: #3D2314 !important; /* Dark Brown Text */
     }
     
-    /* Streamlit Metric Container Overrides with Custom Styling */
+        /* Streamlit Metric Card Container & Text Customization */
     div[data-testid="stMetric"] {
         background-color: #FFFFFF !important;
-        border: 2px solid #3D2314 !important; /* Dark Brown Border */
+        border: 2px solid #8f043e !important; /* Changes the card border to your berry color */
         border-radius: 15px !important;
         padding: 10px !important;
     }
-    div[data-testid="stMetricLabel"] > div {
-        color: #8f043e !important; /* Dark Brown Labels */
+    
+    /* Changes small top labels (e.g., Target Semester CGPA) to your berry color */
+    div[data-testid="stMetricLabel"] > div, 
+    div[data-testid="stMetricLabel"] span, 
+    div[data-testid="stMetricLabel"] p {
+        color: #8f043e !important; 
         font-size: 0.75rem !important;
     }
+    
+    /* Changes the big bottom text values (e.g., 8.5 / 10) to your berry color */
     div[data-testid="stMetricValue"] {
-        color: #8f043e !important; /* MAGENTA FOR QUICK STAT NUMBERS */
+        color: #8f043e !important; 
         font-weight: 800 !important;
         font-size: 1.4rem !important;
     }
+
 
     /* Styling Alert Info Blocks to soft tint and dark brown text */
     .stAlert div, .stAlert p {
