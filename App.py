@@ -1,70 +1,84 @@
 import streamlit as st
-import re
+import pandas as pd
 
 # Configure page settings
-st.set_page_config(page_title="College Sync: Local Matrix", page_icon="🎓", layout="wide")
+st.set_page_config(page_title="College Sync: Matrix Board", page_icon="🎓", layout="wide")
+
+# Custom Injecting CSS for a Beautiful Pink & White Aesthetic
+st.markdown("""
+    <style>
+    /* Primary brand colors */
+    :root {
+        --primary-color: #FF69B4;
+    }
+    
+    /* Background color overrides */
+    .stApp {
+        background-color: #FFF5F7;
+    }
+    
+    /* Title text colors */
+    h1, h2, h3, p {
+        color: #4A1525 !important;
+    }
+    
+    /* Styled container blocks */
+    div[data-testid="stMetricValue"] {
+        color: #FF1493;
+    }
+    
+    /* Modify standard streamlit buttons to be bright pink */
+    div.stButton > button:first-child {
+        background-color: #FF69B4 !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 20px;
+        padding: 0.5rem 2rem;
+    }
+    div.stButton > button:first-child:hover {
+        background-color: #FF1493 !important;
+        color: white !important;
+    }
+    </style>
+""", unsafe_allow_html=True)
 
 # App Header
-st.title("🎓 College Sync: Multi-Chat Digest")
-st.subheader("Local rule-based layout module running with 0% API overhead.")
+st.title("💗 College Sync")
+st.subheader("Your personalized pink academic dashboard. Click into the tables below to type or add items manually!")
 
-# Pre-analyzed data repository matching the selected college streams
+# Pre-packaged parsed data matrices
 PROCESSED_CHATS = {
     "✨ Group 1: Official CS Freshmen Batch '26": {
-        "raw": """[10:15 AM] CR Rahul: @everyone Attendance is mandatory for the guest lecture today at 2 PM in Seminar Hall 2. 
-[10:17 AM] Sneha: Is there a link for online joining? 
-[10:19 AM] CR Rahul: Yes, for hostellers who are sick join here: https://google.com
-[11:02 AM] Prof. Mehta: Please note that the Lab Quiz 1 syllabus covers Chapters 1 to 3. It will happen this Friday morning.""",
         "summary": "CR Rahul announced a mandatory guest lecture for today. Professor Mehta provided syllabus details regarding an upcoming lab evaluation.",
-        "assignments": "• **Lab Quiz 1 Prep**:\nStudy Chapters 1 through 3.",
-        "deadlines": "• **Guest Lecture**: Today at 2:00 PM (Seminar Hall 2)\n• **Lab Quiz 1**: This Friday morning",
+        "assignments": ["Review Chapters 1 through 3"],
+        "deadlines": ["Guest Lecture (2:00 PM today)", "Lab Quiz 1 (Friday morning)"],
         "links": "[🌐 Join Google Meet Room](https://google.com)"
     },
-    
     "🍔 Group 2: Hostel Block-A Banter & Mess": {
-        "raw": """[08:00 AM] Warden: Inspection tonight at 9 PM. Keep rooms clean.
-[12:30 PM] Kabir: Who has the link to the Google Form to change the mess menu? 
-[12:32 PM] Amit: Here bro: https://forms.gle. Fill it before midnight tonight or we are stuck with paneer every day.
-[02:15 PM] Raj: Forgot my ID card at the mess. If anyone finds it please DM.""",
         "summary": "The Warden issued a clean-room directive for an active inspection happening later tonight. The community is gathering votes to adjust the culinary selections.",
-        "assignments": "• **Room Cleanup**:\nOrganize living quarters for review.\n• **Menu Ballot**:\nSubmit preferred dining choices.",
-        "deadlines": "• **Room Inspection**: Tonight at 9:00 PM\n• **Form Submission**: Tonight before 11:59 PM",
+        "assignments": ["Organize living quarters", "Submit preferred dining choices"],
+        "deadlines": ["Room Inspection (9:00 PM tonight)", "Form Submission Cutoff (11:59 PM)"],
         "links": "[📝 Fill Menu Feedback Form](https://forms.gle)"
     },
-    
     "🤖 Group 3: AI/ML Student Club (Un-Official)": {
-        "raw": """[04:00 PM] Lead Dev: Hackathon registrations are closing day after tomorrow! Team up fast.
-[04:05 PM] Ishan: What's the link to register?
-[04:06 PM] Lead Dev: Register here: https://devpost.com. Cash prize is $500.
-[05:20 PM] Dev: Also we have our weekly sync on Sunday at 6 PM on Discord.""",
         "summary": "The Lead Developer issued a final reminder for upcoming competitive hackathon registrations. The core group sync time was finalized.",
-        "assignments": "• **Team Formulation**:\nFind members for the competitive sprint.",
-        "deadlines": "• **Hackathon Registration Closes**: Day after tomorrow\n• **Weekly Sync Meet**: Sunday at 6:00 PM",
+        "assignments": ["Find project teammates"],
+        "deadlines": ["Hackathon Registration closes soon", "Weekly Sync Meet (Sunday 6:00 PM)"],
         "links": "[🏆 Register on Devpost](https://devpost.com)"
     },
-    
     "📧 Email: Academic Dean Notification": {
-        "raw": """From: academicdean@college.edu
-Subject: Mid-Semester Timetable and Academic Warning
-Dear Students,
-Please find the attached link to view your midterm examination slots starting next Monday: https://college.edu. 
-Your course assignments for Calculus and Applied Physics must be uploaded to the LMS portal no later than Sunday, September 21, at 11:59 PM. No late submissions will be entertained.""",
         "summary": "The Academic Dean published the scheduling grid for midterms alongside strict parameters regarding immediate assignment submissions.",
-        "assignments": "• **Calculus Assignment**:\nUpload complete sheets to LMS.\n• **Applied Physics Assignment**:\nFinalize and post documentation.",
-        "deadlines": "• **Midterm Examination Cycle**: Starts next Monday\n• **LMS Portal Upload Cutoff**: Sunday, September 21 at 11:59 PM",
+        "assignments": ["Upload Calculus sheet to LMS", "Finalize Physics documentation"],
+        "deadlines": ["Midterm Exams start next Monday", "LMS Upload Cutoff (Sunday at 11:59 PM)"],
         "links": "[📑 Access Academic Exam Portal](https://college.edu)"
     }
 }
 
-# Dropdown selection for mock streams
+# Dropdown selection for your active streams
 selected_stream = st.selectbox(
-    "💬 Select an incoming notification stream to process:",
+    "🌸 Choose a notification channel stream to view:",
     options=list(PROCESSED_CHATS.keys())
 )
-
-# Display the raw feed container
-with st.expander("🔍 View Raw Incoming Feed", expanded=True):
-    st.code(PROCESSED_CHATS[selected_stream]["raw"], language="text")
 
 st.markdown("---")
 
@@ -77,11 +91,16 @@ with col1:
     
 with col2:
     st.markdown("### 📚 Assignments")
-    st.error(PROCESSED_CHATS[selected_stream]["assignments"])
+    st.caption("✨ Double-click cells to edit or add rows at the bottom")
+    # Convert lists to a DataFrame so they are fully interactive and editable
+    df_assignments = pd.DataFrame({"Your Assignments": PROCESSED_CHATS[selected_stream]["assignments"]})
+    edited_assignments = st.data_editor(df_assignments, num_rows="dynamic", use_container_width=True)
     
 with col3:
     st.markdown("### 📅 Calendar / Deadlines")
-    st.warning(PROCESSED_CHATS[selected_stream]["deadlines"])
+    st.caption("✨ Add personal events directly into this card stream")
+    df_deadlines = pd.DataFrame({"Deadlines / Events": PROCESSED_CHATS[selected_stream]["deadlines"]})
+    edited_deadlines = st.data_editor(df_deadlines, num_rows="dynamic", use_container_width=True)
     
 with col4:
     st.markdown("### 🔗 Links to Join")
