@@ -14,6 +14,7 @@ CHANNELS = [
 ]
 
 # Initialize storage for user tasks and calendar deadlines
+# Initialize storage for user tasks and calendar deadlines
 if "assignments_store" not in st.session_state:
     st.session_state.assignments_store = {
         CHANNELS[0]: ["Study Lab Chapters 1 to 3"],
