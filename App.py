@@ -247,6 +247,7 @@ with col_right:
         "✨ Group 1: Computer Science Official": "The class representative announced a mandatory lecture at 2 PM today in Seminar Hall 2. Professor Mehta also shared the chapters covered in the upcoming lab evaluation.",
         "🍔 Group 2: Hostel Block A Notice Board": "The hostel warden announced a room cleanliness inspection for tonight. Students are also voting on a Google Form to change the weekly mess menu options.",
         "🤖 Group 3: AI/ML Coding Club": "The club lead shared a reminder that project registration closes very soon. The team is holding their weekly synchronization meeting this Sunday evening on Discord.",
+        }
     chat_summaries = {
         "✨ Group 1: Computer Science Official": "The class representative announced a mandatory lecture at 2 PM today in Seminar Hall 2. Professor Mehta also shared the chapters covered in the upcoming lab evaluation.",
         "🍔 Group 2: Hostel Block A Notice Board": "The hostel warden announced a room cleanliness inspection for tonight. Students are also voting on a Google Form to change the weekly mess menu options.",
