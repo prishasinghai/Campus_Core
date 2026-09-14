@@ -123,7 +123,7 @@ st.markdown("""
         padding: 10px !important;
     }
     div[data-testid="stMetricLabel"] > div {
-        color: #3D2314 !important; /* Dark Brown Labels */
+        color: #8f043e !important; /* Dark Brown Labels */
         font-size: 0.75rem !important;
     }
     div[data-testid="stMetricValue"] {
