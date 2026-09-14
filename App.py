@@ -45,7 +45,7 @@ st.markdown("""
         border: 1px solid #2B180E;
     }
     .navbar-brand {
-        color: #FAF9F6 !important; /* Off-White Text */
+        color: #b5074d !important; /* Off-White Text */
         font-weight: 700;
         font-size: 1.1rem;
         display: flex;
