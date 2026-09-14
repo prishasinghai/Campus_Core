@@ -139,7 +139,7 @@ st.markdown("""
 
     /* Target native containers to create clean, solid background squares exactly under the metrics */
     div[data-testid="stVerticalBlockBorderWrapper"] {
-        background-color: #EFECE6 !important; /* Darker off-white shading box tint */
+        background-color: #FAF9F6 !important; /* Darker off-white shading box tint */
         border: 1px solid #D1C9BC !important;
         border-radius: 16px !important;
         padding: 20px !important;
