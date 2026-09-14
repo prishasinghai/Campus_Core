@@ -118,7 +118,7 @@ st.markdown("""
         /* Streamlit Metric Card Container & Text Customization */
     div[data-testid="stMetric"] {
         background-color: #FFFFFF !important;
-        border: 2px solid #8f043e !important; /* Changes the card border to your berry color */
+        border: 2px solid #3D2314 !important; /* Changes the card border to your berry color */
         border-radius: 15px !important;
         padding: 10px !important;
     }
@@ -127,7 +127,7 @@ st.markdown("""
     div[data-testid="stMetricLabel"] > div, 
     div[data-testid="stMetricLabel"] span, 
     div[data-testid="stMetricLabel"] p {
-        color: #8f043e !important; 
+        color: #3D2314 !important; 
         font-size: 0.75rem !important;
     }
     
@@ -142,7 +142,7 @@ st.markdown("""
     /* Styling Alert Info Blocks to soft tint and dark brown text */
     .stAlert div, .stAlert p {
         font-size: 0.825rem !important;
-        color: #3D2314 !important; /* Dark Brown */
+        color: #8f043e !important; /* Dark Brown */
     }
     .stAlert {
         background-color: #F5F5DC !important; /* Beige/Soft Tint Alert box */
