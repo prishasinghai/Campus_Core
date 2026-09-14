@@ -24,28 +24,28 @@ if "deadlines_store" not in st.session_state:
         "🍿 Group 5: Block-A Third Floor Wing-Mates": ["Pizza Money Collection deadline (Saturday 6 PM)", "Movie Night begins (Saturday 9:30 PM)"]
     }
 
-# --- GLOBAL STYLING: COMPACT FONTS, PINK WORKSPACE & BLACK TEXT ---
+# --- GLOBAL STYLING: OFF-WHITE BACKGROUND, DARK BROWN & MAGENTA FONTS ---
 st.markdown("""
     <style>
-    /* Global Core Framework Overrides with smaller fonts */
+    /* Global Core Framework Overrides - Off-White & Dark Brown Base */
     .stApp {
-        background-color: #FFF5F7 !important; /* Soft Pastel Rose Tint */
+        background-color: #FAF9F6 !important; /* Premium Off-White/Ivory Background */
         font-size: 0.85rem !important;
     }
     
-    /* Top Professional University Styled Navbar - Text Changed to Black */
+    /* Top Professional University Styled Navbar - Dark Brown background with off-white text */
     .custom-navbar {
-        background-color: #FFB6C1; /* Light Pink Accent instead of dark plum */
+        background-color: #3D2314; /* Elegant Dark Brown */
         padding: 0.5rem 1.5rem;
         display: flex;
         align-items: center;
         justify-content: space-between;
         border-radius: 12px;
         margin-bottom: 1rem;
-        border: 1px solid #FF69B4;
+        border: 1px solid #2B180E;
     }
     .navbar-brand {
-        color: #000000 !important; /* FORCED BLACK FONTS */
+        color: #FAF9F6 !important; /* Off-White Text */
         font-weight: 700;
         font-size: 1.1rem;
         display: flex;
@@ -56,14 +56,14 @@ st.markdown("""
         display: flex;
         align-items: center;
         gap: 0.75rem;
-        color: #000000 !important; /* FORCED BLACK FONTS */
+        color: #FAF9F6 !important; /* Off-White Text */
         font-size: 0.85rem;
     }
     .avatar {
         width: 30px;
         height: 30px;
-        background-color: #FF69B4;
-        color: #000000 !important; /* FORCED BLACK FONTS ON AVATAR TEXT */
+        background-color: #FF00FF; /* Magenta Avatar Circle */
+        color: #000000 !important;
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -75,73 +75,90 @@ st.markdown("""
     /* Custom Card Containers resembling the University Portal UI layout */
     div.portal-header-box {
         background-color: #FFFFFF;
-        border: 1px solid #FFB6C1;
+        border: 1px solid #D2B48C; /* Light Tan/Brown Border */
         border-radius: 12px;
         padding: 1rem 1.5rem;
         margin-bottom: 1rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        box-shadow: 0 4px 6px rgba(255, 182, 193, 0.1);
+        box-shadow: 0 4px 6px rgba(61, 35, 20, 0.05);
     }
     div.portal-header-box h2 {
-        color: #FF00FF !important; /* MAGENTA HEADING */
+        color: #FF00FF !important; /* MAGENTA MAIN HEADING */
         font-size: 1.2rem !important;
         margin: 0;
+    }
+    div.portal-header-box p {
+        color: #5C4033 !important; /* Dark Brown Subtext */
     }
     
     .status-dot {
         height: 8px;
         width: 8px;
-        background-color: #FF1493;
+        background-color: #FF00FF; /* Magenta Sync Dot */
         border-radius: 50%;
         display: inline-block;
         margin-right: 6px;
     }
     
-    /* Global Typography Overrides to MAGENTA */
+    /* Global Typography Overrides to MAGENTA & DARK BROWN */
     h1, h2, h3, h4, h5, h6 {
-        color: #FF00FF !important; /* MAGENTA SUBHEADINGS */
+        color: #FF00FF !important; /* MAGENTA FOR SUBHEADINGS */
         font-weight: 700 !important;
     }
     h3 { font-size: 1.1rem !important; }
     h4 { font-size: 0.95rem !important; }
     
-    /* Streamlit Metric Container Overrides with MAGENTA custom styling */
+    /* Base text blocks, paragraph configurations default to Dark Brown */
+    p, span, label, div {
+        color: #3D2314 !important; /* Dark Brown Text */
+    }
+    
+    /* Streamlit Metric Container Overrides with Custom Styling */
     div[data-testid="stMetric"] {
         background-color: #FFFFFF !important;
-        border: 2px solid #FFC0CB !important;
+        border: 2px solid #3D2314 !important; /* Dark Brown Border */
         border-radius: 15px !important;
         padding: 10px !important;
     }
     div[data-testid="stMetricLabel"] > div {
-        color: #4A1525 !important;
+        color: #3D2314 !important; /* Dark Brown Labels */
         font-size: 0.75rem !important;
     }
     div[data-testid="stMetricValue"] {
-        color: #FF00FF !important; /* MAGENTA FOR METRIC VALUE */
+        color: #FF00FF !important; /* MAGENTA FOR QUICK STAT NUMBERS */
         font-weight: 800 !important;
         font-size: 1.4rem !important;
     }
 
-    /* Styling Alert Info Blocks to soft rose tints and small text */
-    .stAlert div {
+    /* Styling Alert Info Blocks to soft tint and dark brown text */
+    .stAlert div, .stAlert p {
         font-size: 0.825rem !important;
-        color: #4A1525 !important;
+        color: #3D2314 !important; /* Dark Brown */
     }
     .stAlert {
-        background-color: #FFE4E1 !important; 
-        border-left: 5px solid #FF69B4 !important;
+        background-color: #F5F5DC !important; /* Beige/Soft Tint Alert box */
+        border-left: 5px solid #FF00FF !important; /* Magenta Accent Strip */
         border-radius: 10px;
         padding: 0.75rem !important;
     }
     
-    /* Forcing clean text sizing inside information boards */
+    /* Data frames custom styles matching layout fonts */
     .stDataFrame, div[data-testid="stTable"] {
         font-size: 0.8rem !important;
     }
     .stCaption {
         font-size: 0.75rem !important;
+        color: #5C4033 !important; /* Muted Dark Brown Captions */
+    }
+    
+    /* Submit action button custom override */
+    div.stButton > button:first-child {
+        background-color: #FF00FF !important; /* Magenta Buttons */
+        color: #FFFFFF !important;
+        border: none !important;
+        border-radius: 8px;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -162,9 +179,9 @@ st.markdown("""
     <div class="portal-header-box">
         <div>
             <h2>💗 College Sync Dashboard</h2>
-            <p style="color: #64748b; margin: 0; font-size: 0.8rem;">Automated Local Filtering & Command Matrix Overview</p>
+            <p style="margin: 0; font-size: 0.8rem;">Automated Local Filtering & Command Matrix Overview</p>
         </div>
-        <div style="font-size: 0.8rem; color: #4A1525;">
+        <div style="font-size: 0.8rem; color: #3D2314;">
             <span class="status-dot"></span>Active Simulation Feed Connected
         </div>
     </div>
@@ -183,8 +200,8 @@ with m4:
 
 st.markdown("---")
 
-# --- 4. STREAM LAYOUT ENGINE ---
-col_left, col_right = st.columns([1, 2])
+# --- 4. STREAM LAYOUT ENGINE (Fixed with required sizing values) ---
+col_left, col_right = st.columns([1, 2]) # 1 unit wide left sidebar, 2 units wide right matrix workspace
 
 with col_left:
     st.markdown("### 🎛️ Feed Stream Triage")
@@ -224,11 +241,6 @@ with col_right:
     }
     
     chat_summaries = {
-        "✨ Group 1: Official CS Freshmen Batch '26": "CR Rahul announced a mandatory guest lecture for today. Professor Mehta provided syllabus details regarding an upcoming lab evaluation.",
-        "🍔 Group 2: Hostel Block-A Banter & Mess": "The Warden issued a clean-room directive for an active inspection happening later tonight. The community is gathering votes to adjust the culinary selections.",
-        "🤖 Group 3: AI/ML Student Club (Un-Official)": "The Lead Developer issued a final reminder for upcoming competitive hackathon registrations. The core group sync time was finalized.",
-        "🎨 Group 4: Cultural Fest Core Committee '26": "Volunteers are needed urgently to handle logistics for the introductory winter carnival night. Design work templates are open.",
-    }
     chat_summaries = {
         "✨ Group 1: Official CS Freshmen Batch '26": "CR Rahul announced a mandatory guest lecture for today. Professor Mehta provided syllabus details regarding an upcoming lab evaluation.",
         "🍔 Group 2: Hostel Block-A Banter & Mess": "The Warden issued a clean-room directive for an active inspection happening later tonight. The community is gathering votes to adjust the culinary selections.",
