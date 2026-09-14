@@ -257,6 +257,7 @@ with col_right:
         CHANNELS[1]: "The hostel warden announced a room cleanliness inspection for tonight. Students are also voting on a Google Form to change the weekly mess menu options.",
         CHANNELS[2]: "The club lead shared a reminder that project registration closes very soon. The team is holding their weekly synchronization meeting this Sunday evening on Discord.",
         CHANNELS[3]: "The festival coordinators are looking for urgent student volunteers to manage logistics. Creative banners and templates are open for edits on Canva.",
+        }
     chat_summaries = {
         CHANNELS[0]: "The class representative announced a mandatory lecture at 2 PM today in Seminar Hall 2. Professor Mehta also shared the chapters covered in the upcoming lab evaluation.",
         CHANNELS[1]: "The hostel warden announced a room cleanliness inspection for tonight. Students are also voting on a Google Form to change the weekly mess menu options.",
