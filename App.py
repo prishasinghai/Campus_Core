@@ -4,23 +4,32 @@ import pandas as pd
 # Configure page settings
 st.set_page_config(page_title="Student Chat Assistant", page_icon="🎓", layout="wide")
 
+# Standardized channel keys to make sure dictionaries match perfectly
+CHANNELS = [
+    "✨ Group 1: Computer Science Official",
+    "🍔 Group 2: Hostel Block A Notice Board",
+    "🤖 Group 3: AI/ML Coding Club",
+    "🎨 Group 4: College Festival Team",
+    "🍿 Group 5: Roommates Chat (Floor 3)"
+]
+
 # Initialize storage for user tasks and calendar deadlines
 if "assignments_store" not in st.session_state:
     st.session_state.assignments_store = {
-        "✨ Group 1: Computer Science Official": ["Study Lab Chapters 1 to 3"],
-        "🍔 Group 2: Hostel Block A Notice Board": ["Clean up room for inspection", "Vote for the new mess menu"],
-        "🤖 Group 3: AI/ML Coding Club": ["Find teammates for the hackathon", "Install Python on your laptop"],
-        "🎨 Group 4: College Festival Team": ["Make the event layout chart", "Create social media posters on Canva"],
-        "🍿 Group 5: Roommates Chat (Floor 3)": ["Pay money for weekend pizza pool", "Vote for the movie night pick"]
+        CHANNELS[0]: ["Study Lab Chapters 1 to 3"],
+        CHANNELS[1]: ["Clean up room for inspection", "Vote for the new mess menu"],
+        CHANNELS[2]: ["Find teammates for the hackathon", "Install Python on your laptop"],
+        CHANNELS[3]: ["Make the event layout chart", "Create social media posters on Canva"],
+        CHANNELS[4]: ["Pay money for weekend pizza pool", "Vote for the movie night pick"]
     }
 
 if "deadlines_store" not in st.session_state:
     st.session_state.deadlines_store = {
-        "✨ Group 1: Computer Science Official": ["Guest Lecture (Today at 2:00 PM)", "Lab Quiz 1 (This Friday morning)"],
-        "🍔 Group 2: Hostel Block A Notice Board": ["Room Inspection (Tonight at 9:00 PM)", "Menu Form Cutoff (Tonight at 11:59 PM)"],
-        "🤖 Group 3: AI/ML Coding Club": ["Registration Deadline (Closing very soon)", "Weekly Club Meeting (Sunday at 6:00 PM)"],
-        "🎨 Group 4: College Festival Team": ["Volunteer Form Due (Thursday at 5:00 PM)", "Poster Draft Due (Friday at midnight)"],
-        "🍿 Group 5: Roommates Chat (Floor 3)": ["Pizza Pool Deadline (Saturday at 6:00 PM)", "Movie Night Starts (Saturday at 9:30 PM)"]
+        CHANNELS[0]: ["Guest Lecture (Today at 2:00 PM)", "Lab Quiz 1 (This Friday morning)"],
+        CHANNELS[1]: ["Room Inspection (Tonight at 9:00 PM)", "Menu Form Cutoff (Tonight at 11:59 PM)"],
+        CHANNELS[2]: ["Registration Deadline (Closing very soon)", "Weekly Club Meeting (Sunday at 6:00 PM)"],
+        CHANNELS[3]: ["Volunteer Form Due (Thursday at 5:00 PM)", "Poster Draft Due (Friday at midnight)"],
+        CHANNELS[4]: ["Pizza Pool Deadline (Saturday at 6:00 PM)", "Movie Night Starts (Saturday at 9:30 PM)"]
     }
 
 # --- GLOBAL THEME CONFIGURATION ---
@@ -207,13 +216,13 @@ with m4:
 st.markdown("<br>", unsafe_allow_html=True)
 
 # --- 4. DUAL COLUMN PRESENTATION HUB ---
-col_left, col_right = st.columns([1, 2]) # Balanced proportions for side-by-side view
+col_left, col_right = st.columns(2) # Fixed with structural balancing layout integers
 
 with col_left:
     st.markdown("### 🎛️ Group Controller")
     selected_stream = st.selectbox(
         "Choose a Chat Group to Filter:",
-        options=list(st.session_state.assignments_store.keys())
+        options=CHANNELS
     )
     
     st.markdown("---")
@@ -236,24 +245,24 @@ with col_left:
 # --- 5. CLEAN INFORMATION WORKSPACE ---
 with col_right:
     chat_links = {
-        "✨ Group 1: Computer Science Official": "• [🌐 Join Online Class Link](https://google.com)\n• [💬 Join WhatsApp Lab Sub-Group](https://whatsapp.com)",
-        "🍔 Group 2: Hostel Block A Notice Board": "• [📝 Fill Mess Menu Feedback Form](https://forms.gle)\n• [💬 Join Hostel Sports Chat](https://whatsapp.com)",
-        "🤖 Group 3: AI/ML Coding Club": "• [🏆 Open Competition Register Page](https://devpost.com)\n• [💬 Join WhatsApp Projects Team](https://whatsapp.com)",
-        "🎨 Group 4: College Festival Team": "• [📝 Fill Student Volunteer Signup Form](https://forms.gle)\n• [💬 Join WhatsApp Design Group](https://whatsapp.com)",
-        "🍿 Group 5: Roommates Chat (Floor 3)": "• [🍿 Open Shared Movie Voting Poll](https://forms.gle)\n• [💬 Join Canteen Delivery Group](https://whatsapp.com)"
+        CHANNELS[0]: "• [🌐 Join Online Class Link](https://google.com)\n• [💬 Join WhatsApp Lab Sub-Group](https://whatsapp.com)",
+        CHANNELS[1]: "• [📝 Fill Mess Menu Feedback Form](https://forms.gle)\n• [💬 Join Hostel Sports Chat](https://whatsapp.com)",
+        CHANNELS[2]: "• [🏆 Open Competition Register Page](https://devpost.com)\n• [💬 Join WhatsApp Projects Team](https://whatsapp.com)",
+        CHANNELS[3]: "• [📝 Fill Student Volunteer Signup Form](https://forms.gle)\n• [💬 Join WhatsApp Design Group](https://whatsapp.com)",
+        CHANNELS[4]: "• [🍿 Open Shared Movie Voting Poll](https://forms.gle)\n• [💬 Join Canteen Delivery Group](https://whatsapp.com)"
     }
     
     chat_summaries = {
-        "✨ Group 1: Computer Science Official": "The class representative announced a mandatory lecture at 2 PM today in Seminar Hall 2. Professor Mehta also shared the chapters covered in the upcoming lab evaluation.",
-        "🍔 Group 2: Hostel Block A Notice Board": "The hostel warden announced a room cleanliness inspection for tonight. Students are also voting on a Google Form to change the weekly mess menu options.",
-        "🤖 Group 3: AI/ML Coding Club": "The club lead shared a reminder that project registration closes very soon. The team is holding their weekly synchronization meeting this Sunday evening on Discord.",
-        }
+        CHANNELS[0]: "The class representative announced a mandatory lecture at 2 PM today in Seminar Hall 2. Professor Mehta also shared the chapters covered in the upcoming lab evaluation.",
+        CHANNELS[1]: "The hostel warden announced a room cleanliness inspection for tonight. Students are also voting on a Google Form to change the weekly mess menu options.",
+        CHANNELS[2]: "The club lead shared a reminder that project registration closes very soon. The team is holding their weekly synchronization meeting this Sunday evening on Discord.",
+        CHANNELS[3]: "The festival coordinators are looking for urgent student volunteers to manage logistics. Creative banners and templates are open for edits on Canva.",
     chat_summaries = {
-        "✨ Group 1: Computer Science Official": "The class representative announced a mandatory lecture at 2 PM today in Seminar Hall 2. Professor Mehta also shared the chapters covered in the upcoming lab evaluation.",
-        "🍔 Group 2: Hostel Block A Notice Board": "The hostel warden announced a room cleanliness inspection for tonight. Students are also voting on a Google Form to change the weekly mess menu options.",
-        "🤖 Group 3: AI/ML Coding Club": "The club lead shared a reminder that project registration closes very soon. The team is holding their weekly synchronization meeting this Sunday evening on Discord.",
-        "🎨 Group 4: College Festival Team": "The festival coordinators are looking for urgent student volunteers to manage logistics. Creative banners and templates are open for edits on Canva.",
-        "🍿 Group 5: Roommates Chat (Floor 3)": "Students are pooling money to place a group food order this weekend and are organizing a movie night inside the main hostel common room lounge."
+        CHANNELS[0]: "The class representative announced a mandatory lecture at 2 PM today in Seminar Hall 2. Professor Mehta also shared the chapters covered in the upcoming lab evaluation.",
+        CHANNELS[1]: "The hostel warden announced a room cleanliness inspection for tonight. Students are also voting on a Google Form to change the weekly mess menu options.",
+        CHANNELS[2]: "The club lead shared a reminder that project registration closes very soon. The team is holding their weekly synchronization meeting this Sunday evening on Discord.",
+        CHANNELS[3]: "The festival coordinators are looking for urgent student volunteers to manage logistics. Creative banners and templates are open for edits on Canva.",
+        CHANNELS[4]: "Students are pooling money to place a group food order this weekend and are organizing a movie night inside the main hostel common room lounge."
     }
 
     st.markdown("### 📊 Smart Stream Analysis Matrix")
