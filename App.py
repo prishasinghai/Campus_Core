@@ -127,7 +127,7 @@ st.markdown("""
         font-size: 0.75rem !important;
     }
     div[data-testid="stMetricValue"] {
-        color: #FF00FF !important; /* MAGENTA FOR QUICK STAT NUMBERS */
+        color: #8f043e !important; /* MAGENTA FOR QUICK STAT NUMBERS */
         font-weight: 800 !important;
         font-size: 1.4rem !important;
     }
