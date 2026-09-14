@@ -214,12 +214,15 @@ with col_right:
         edited_asg = st.data_editor(df_asg, num_rows="dynamic", use_container_width=True, key=f"asg_ed_{selected_stream}")
         st.session_state.assignments_store[selected_stream] = edited_asg["Current Homework"].tolist()
         
-    with c3:
+       with c3:
         st.markdown("#### 📅 Deadlines / Calendar")
         st.caption("💖 Modify or append rows directly:")
         df_dl = pd.DataFrame({"Target Deadlines": st.session_state.deadlines_store[selected_stream]})
-        edited_dl = st.data_editor(df_dl, num_rows="dynamic", use_container_width=True, key=f"dl_ed_{selected_stream}")st.session_state.deadlines_store[selected_stream] = edited_dl["Target Deadlines"].tolist()
-   
-    with c4:
-        st.markdown("#### 🔗 Links to Join")st.markdown(chat_links[selected_stream])
         
+        # Line 221 split correctly below:
+        edited_dl = st.data_editor(df_dl, num_rows="dynamic", use_container_width=True, key=f"dl_ed_{selected_stream}")
+        st.session_state.deadlines_store[selected_stream] = edited_dl["Target Deadlines"].tolist()
+        
+    with c4:
+        st.markdown("#### 🔗 Links to Join")
+        st.markdown(chat_links[selected_stream])
