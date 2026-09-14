@@ -220,7 +220,7 @@ with m4:
 st.markdown("---")
 
 # --- 4. STREAM LAYOUT ENGINE ---
-col_left, col_right = st.columns()
+col_left, col_right = st.columns(2)
 
 with col_left:
     st.markdown("### 🎛️ Feed Stream Triage")
