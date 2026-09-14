@@ -2,97 +2,93 @@ import streamlit as st
 import pandas as pd
 
 # Configure page settings
-st.set_page_config(page_title="College Sync: Portal Triage Hub", page_icon="💖", layout="wide")
+st.set_page_config(page_title="Student Chat Assistant", page_icon="🎓", layout="wide")
 
-# Initialize Session States for editable dynamic frames so user entries persist across actions
+# Initialize storage for user tasks and calendar deadlines
 if "assignments_store" not in st.session_state:
     st.session_state.assignments_store = {
-        "✨ Group 1: Official CS Freshmen Batch '26": ["Review Chapters 1 through 3"],
-        "🍔 Group 2: Hostel Block-A Banter & Mess": ["Organize living quarters", "Submit preferred dining choices"],
-        "🤖 Group 3: AI/ML Student Club (Un-Official)": ["Find project teammates", "Install dependencies script"],
-        "🎨 Group 4: Cultural Fest Core Committee '26": ["Draft event layout plan", "Design social graphics on Canva"],
-        "🍿 Group 5: Block-A Third Floor Wing-Mates": ["Send share of pizza pool money to room 312", "Vote for movie choice on poll"]
+        "✨ Group 1: Computer Science Official": ["Study Lab Chapters 1 to 3"],
+        "🍔 Group 2: Hostel Block A Notice Board": ["Clean up room for inspection", "Vote for the new mess menu"],
+        "🤖 Group 3: AI/ML Coding Club": ["Find teammates for the hackathon", "Install Python on your laptop"],
+        "🎨 Group 4: College Festival Team": ["Make the event layout chart", "Create social media posters on Canva"],
+        "🍿 Group 5: Roommates Chat (Floor 3)": ["Pay money for weekend pizza pool", "Vote for the movie night pick"]
     }
 
 if "deadlines_store" not in st.session_state:
     st.session_state.deadlines_store = {
-        "✨ Group 1: Official CS Freshmen Batch '26": ["Guest Lecture (2:00 PM today)", "Lab Quiz 1 (Friday morning)"],
-        "🍔 Group 2: Hostel Block-A Banter & Mess": ["Room Inspection (9:00 PM tonight)", "Form Submission Cutoff (11:59 PM)"],
-        "🤖 Group 3: AI/ML Student Club (Un-Official)": ["Hackathon Registration closes soon", "Weekly Sync Meet (Sunday 6:00 PM)"],
-        "🎨 Group 4: Cultural Fest Core Committee '26": ["Volunteer Onboarding Form (By Thursday 5 PM)", "Theme Reveal Poster Draft (Friday midnight)"],
-        "🍿 Group 5: Block-A Third Floor Wing-Mates": ["Pizza Money Collection deadline (Saturday 6 PM)", "Movie Night begins (Saturday 9:30 PM)"]
+        "✨ Group 1: Computer Science Official": ["Guest Lecture (Today at 2:00 PM)", "Lab Quiz 1 (This Friday morning)"],
+        "🍔 Group 2: Hostel Block A Notice Board": ["Room Inspection (Tonight at 9:00 PM)", "Menu Form Cutoff (Tonight at 11:59 PM)"],
+        "🤖 Group 3: AI/ML Coding Club": ["Registration Deadline (Closing very soon)", "Weekly Club Meeting (Sunday at 6:00 PM)"],
+        "🎨 Group 4: College Festival Team": ["Volunteer Form Due (Thursday at 5:00 PM)", "Poster Draft Due (Friday at midnight)"],
+        "🍿 Group 5: Roommates Chat (Floor 3)": ["Pizza Pool Deadline (Saturday at 6:00 PM)", "Movie Night Starts (Saturday at 9:30 PM)"]
     }
 
-# --- GLOBAL STYLING: REFINED CONTRAST BACKGROUNDS & RASPBERRY ACCENTS ---
+# --- GLOBAL THEME CONFIGURATION ---
 st.markdown("""
     <style>
-    /* Main Page Background - Slightly deeper warm linen tone so #FAF9F6 cards pop out */
+    /* Main Background — Clean Premium Off-White */
     .stApp {
-        background-color: #F4F1EA !important;
-        font-size: 0.85rem !important;
+        background-color: #FAF9F6 !important;
+        font-size: 0.88rem !important;
     }
     
-    /* Top Professional University Styled Navbar - Matched Exactly to Your Image */
+    /* Top Header Bar — Matches Your Vibrant Pink Image Exactly */
     .custom-navbar {
-        background-color: #cf0864 !important; /* Solid vibrant pink background */
-        padding: 0.75rem 2rem;
+        background-color: #cf0864 !important;
+        padding: 0.8rem 2rem;
         display: flex;
         align-items: center;
         justify-content: space-between;
         border-radius: 12px;
-        margin-bottom: 1rem;
-        border: none !important;
+        margin-bottom: 1.5rem;
     }
     .navbar-brand {
-        color: #FFFFFF !important; /* Bold White Title Text */
+        color: #FFFFFF !important;
         font-weight: 700;
-        font-size: 1.1rem;
-        display: flex;
-        align-items: center;
-        gap: 10px;
+        font-size: 1.15rem;
     }
     .user-profile {
         display: flex;
         align-items: center;
         gap: 0.75rem;
-        color: #000000 !important; /* Black Welcome text to match your image */
+        color: #000000 !important;
         font-size: 0.85rem;
         font-weight: 600;
     }
     .avatar {
         width: 32px;
         height: 32px;
-        background-color: #000000 !important; /* Black circular avatar badge */
-        color: #FFFFFF !important; /* White FS initials */
+        background-color: #000000 !important;
+        color: #FFFFFF !important;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         font-weight: bold;
-        font-size: 0.85rem;
     }
     
-    /* Portal header message card box */
+    /* Clean Info Sub-Header Box */
     div.portal-header-box {
         background-color: #FFFFFF;
-        border: 1px solid #D2B48C;
+        border: 1px solid #EFECE6;
         border-radius: 12px;
         padding: 1rem 1.5rem;
-        margin-bottom: 1rem;
+        margin-bottom: 1.5rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        box-shadow: 0 4px 6px rgba(61, 35, 20, 0.05);
     }
     div.portal-header-box h2 {
-        color: #cf0864 !important; /* RASPBERRY TITLE */
-        font-size: 1.2rem !important;
+        color: #cf0864 !important;
+        font-size: 1.25rem !important;
         margin: 0;
     }
     div.portal-header-box p {
-        color: #5C4033 !important;
+        color: #3D2314 !important;
+        margin: 0;
     }
     
+    /* Active Connection Pulse Dot */
     .status-dot {
         height: 8px;
         width: 8px;
@@ -102,82 +98,73 @@ st.markdown("""
         margin-right: 6px;
     }
     
-    /* Typography Global Rules forced to deep Raspberry #cf0864 */
-    h1, h2, h3, h4, h5, h6 {
+    /* Dynamic Headers — Deep Vibrant Pink */
+    h1, h2, h3, h4 {
         color: #cf0864 !important;
         font-weight: 700 !important;
     }
-    h3 { font-size: 1.1rem !important; }
-    h4 { font-size: 0.95rem !important; margin-bottom: 0.5rem !important;}
+    h3 { font-size: 1.15rem !important; margin-bottom: 1rem !important; }
+    h4 { font-size: 1rem !important; margin-bottom: 0.5rem !important; }
     
+    /* Primary Text Blocks — Clean Dark Brown */
     p, span, label, div {
-        color: #3D2314 !important; /* Base texts default to Dark Brown */
+        color: #3D2314 !important;
     }
     
-    /* Streamlit Metric Card Container & Text Customization matching #8f043e */
+    /* Presentation Score Cards — Custom Dark Berry #8f043e */
     div[data-testid="stMetric"] {
         background-color: #FFFFFF !important;
-        border: 2px solid #8f043e !important; /* Changes the card border to your berry color */
-        border-radius: 15px !important;
-        padding: 10px !important;
+        border: 1px solid #EFECE6 !important;
+        border-radius: 12px !important;
+        padding: 12px !important;
+        box-shadow: 0px 2px 4px rgba(0,0,0,0.02) !important;
     }
-    
-    /* Changes small top labels (e.g., Target Semester CGPA) to your berry color */
     div[data-testid="stMetricLabel"] > div, 
     div[data-testid="stMetricLabel"] span, 
     div[data-testid="stMetricLabel"] p {
-        color: #8f043e !important; 
-        font-size: 0.75rem !important;
+        color: #8f043e !important;
+        font-size: 0.78rem !important;
+        font-weight: 600;
     }
-    
-    /* Changes the big bottom text values (e.g., 8.5 / 10) to your berry color */
     div[data-testid="stMetricValue"] {
-        color: #8f043e !important; 
+        color: #8f043e !important;
         font-weight: 800 !important;
-        font-size: 1.4rem !important;
+        font-size: 1.35rem !important;
     }
 
-    /* 100% Reliable Custom Card Shading Rectangles for your Matrix Grid */
-    div.custom-matrix-card {
-        background-color: #FAF9F6 !important; /* Exact Requested #FAF9F6 Color */
-        border: 2px solid #cf0864 !important; /* High-contrast Dark Pink outline border */
-        border-radius: 16px !important;
-        padding: 24px !important;
-        margin-bottom: 1rem !important;
-        box-shadow: 0px 4px 12px rgba(207, 8, 100, 0.06) !important; /* Elegant outer glow */
-    }
-
-    /* Remove default background styling around internal streamlit blocks inside your cards */
-    div[data-testid="stVerticalBlockBorderWrapper"] {
-        background-color: transparent !important;
-        border: none !important;
-        padding: 0px !important;
-        box-shadow: none !important;
-    }
-
-    /* Soft Alert Box settings */
+    /* Soft Blue Chat Alert Box */
     .stAlert {
-        background-color: #FFFFFF !important; 
-        border-left: 5px solid #cf0864 !important;
+        background-color: #EDF5FF !important;
+        border-left: 4px solid #cf0864 !important;
         border-radius: 8px;
-        padding: 0.75rem !important;
+        padding: 0.85rem !important;
+    }
+    .stAlert div, .stAlert p {
+        color: #3D2314 !important;
     }
     
+    /* Interactive Tables & Input Fields */
     .stDataFrame, div[data-testid="stTable"] {
-        font-size: 0.8rem !important;
+        font-size: 0.825rem !important;
     }
     .stCaption {
         font-size: 0.75rem !important;
         color: #5C4033 !important;
     }
     
-    /* Navigation execute functional button override */
+    /* Primary Action Buttons */
     div.stButton > button:first-child {
         background-color: #cf0864 !important;
         color: #FFFFFF !important;
         border: none !important;
         border-radius: 8px;
         font-weight: bold;
+        font-size: 0.85rem;
+        padding: 0.4rem 1rem;
+    }
+    div.stButton > button:first-child:hover {
+        background-color: #8f043e !important;
+        color: #FFFFFF !important;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -185,7 +172,7 @@ st.markdown("""
 # --- 1. TOP PORTAL HEADER NAVIGATION BAR ---
 st.markdown("""
     <div class="custom-navbar">
-        <div class="navbar-brand">🎓 University Student Portal — Stream Triage & Action Hub</div>
+        <div class="navbar-brand">🎓 College Sync — Student Stream Triage Hub</div>
         <div class="user-profile">
             <span>Welcome, <b>Freshman Student</b></span>
             <div class="avatar">FS</div>
@@ -193,107 +180,106 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-# --- 2. BREADCRUMB & LIVE SYNC STATUS ---
+# --- 2. PRESENTATION WELCOME BANNER ---
 st.markdown("""
     <div class="portal-header-box">
         <div>
-            <h2>💗 College Sync Dashboard</h2>
-            <p style="margin: 0; font-size: 0.8rem;">Automated Local Filtering & Pair Container Matrix Overview</p>
+            <h2>Smart Student Assistant Dashboard</h2>
+            <p>Helping students clean up chaotic chat groups and instantly organize their daily schedules.</p>
         </div>
-        <div style="font-size: 0.8rem; color: #3D2314;">
-            <span class="status-dot"></span>Active Simulation Feed Connected
+        <div style="font-size: 0.825rem; font-weight: 600;">
+            <span class="status-dot"></span>Live Chat Scanner Active
         </div>
     </div>
 """, unsafe_allow_html=True)
 
-# --- 3. METRIC QUICK PINS GRID ---
+# --- 3. QUICK SCORE CARDS GRID ---
 m1, m2, m3, m4 = st.columns(4)
 with m1:
-    st.metric(label="🎯 Target Semester CGPA", value="8.5 / 10")
+    st.metric(label="🎯 Target College CGPA", value="8.5 / 10")
 with m2:
-    st.metric(label="🏠 Residence Room", value="Block A - 304")
+    st.metric(label="🏠 Campus Living Space", value="Block A - Room 304")
 with m3:
-    st.metric(label="🏫 Daily Lecture Base", value="LT-3 (Engineering)")
+    st.metric(label="🏫 Main Class Location", value="Lecture Hall 3 (Engineering)")
 with m4:
-    st.metric(label="🌸 Active Club Badges", value="4 Active Streams")
+    st.metric(label="🌸 Monitored Chat Feeds", value="5 Active Channels")
 
-st.markdown("---")
+st.markdown("<br>", unsafe_allow_html=True)
 
-# --- 4. STREAM LAYOUT ENGINE ---
-col_left, col_right = st.columns(2)
+# --- 4. DUAL COLUMN PRESENTATION HUB ---
+col_left, col_right = st.columns([1, 2]) # Balanced proportions for side-by-side view
 
 with col_left:
-    st.markdown("### 🎛️ Feed Stream Triage")
+    st.markdown("### 🎛️ Group Controller")
     selected_stream = st.selectbox(
-        "Select Active Feed Stream Channel:",
+        "Choose a Chat Group to Filter:",
         options=list(st.session_state.assignments_store.keys())
     )
     
     st.markdown("---")
-    st.markdown("### 🎙️ Voice Assistant Hub")
-    st.caption("💖 Record audio input or drop text note below:")
+    st.markdown("### 🎙️ Instant Voice Input")
+    st.caption("Tell the app what to add (e.g., 'Submit physics files tomorrow morning'):")
     
-    # Audio recorder native widget block
-    audio_input = st.audio_input("Record Voice Action Command")
+    # Simple speech or text integration hub
+    audio_input = st.audio_input("Record Your Voice Command")
+    voice_command = st.text_input("Or type your reminder directly here:", placeholder="Type a reminder...")
     
-    # Text helper entry box
-    voice_command = st.text_input("Or input spoken phrase action directly:", placeholder="e.g., Submit lab file at 10 AM")
-    
-    if st.button("⚡ Execute Command Direct to Calendar", use_container_width=True):
+    if st.button("⚡ Save Directly to Calendar", use_container_width=True):
         if voice_command:
             clean_cmd = voice_command.strip()
             st.session_state.deadlines_store[selected_stream].append(clean_cmd)
-            st.success(f"Successfully dropped directly to your Calendar matrix!")
+            st.success("Successfully saved to your Calendar list below!")
             st.rerun()
         else:
-            st.warning("Please input or speak an entry block first.")
+            st.warning("Please type or say something first.")
 
-# --- 5. THE PAIRED STRUCTURAL INFORMATION CONNECTIONS HUB ---
+# --- 5. CLEAN INFORMATION WORKSPACE ---
 with col_right:
     chat_links = {
-        "✨ Group 1: Official CS Freshmen Batch '26": "• [🌐 Join Google Meet](https://google.com)\n• [💬 Join WhatsApp Subgroup](https://whatsapp.com)",
-        "🍔 Group 2: Hostel Block-A Banter & Mess": "• [📝 Fill Menu Form](https://forms.gle)\n• [💬 Join Table Tennis Chat](https://whatsapp.com)",
-        "🤖 Group 3: AI/ML Student Club (Un-Official)": "• [🏆 Register on Devpost](https://devpost.com)\n• [💬 Join Dev Projects Group](https://whatsapp.com)",
+        "✨ Group 1: Computer Science Official": "• [🌐 Join Online Class Link](https://google.com)\n• [💬 Join WhatsApp Lab Sub-Group](https://whatsapp.com)",
+        "🍔 Group 2: Hostel Block A Notice Board": "• [📝 Fill Mess Menu Feedback Form](https://forms.gle)\n• [💬 Join Hostel Sports Chat](https://whatsapp.com)",
+        "🤖 Group 3: AI/ML Coding Club": "• [🏆 Open Competition Register Page](https://devpost.com)\n• [💬 Join WhatsApp Projects Team](https://whatsapp.com)",
+        "🎨 Group 4: College Festival Team": "• [📝 Fill Student Volunteer Signup Form](https://forms.gle)\n• [💬 Join WhatsApp Design Group](https://whatsapp.com)",
+        "🍿 Group 5: Roommates Chat (Floor 3)": "• [🍿 Open Shared Movie Voting Poll](https://forms.gle)\n• [💬 Join Canteen Delivery Group](https://whatsapp.com)"
     }
+    
     chat_summaries = {
-        "✨ Group 1: Official CS Freshmen Batch '26": "CR Rahul announced a mandatory guest lecture for today. Professor Mehta provided syllabus details regarding an upcoming lab evaluation.",
-        "🍔 Group 2: Hostel Block-A Banter & Mess": "The Warden issued a clean-room directive for an active inspection happening later tonight. The community is gathering votes to adjust the culinary selections.",
-        "🤖 Group 3: AI/ML Student Club (Un-Official)": "The Lead Developer issued a final reminder for upcoming competitive hackathon registrations. The core group sync time was finalized.",
-        "🎨 Group 4: Cultural Fest Core Committee '26": "Volunteers are needed urgently to handle logistics for the introductory winter carnival night. Design work templates are open.",
-        "🍿 Group 5: Block-A Third Floor Wing-Mates": "Hostel residents are pooling orders for weekend food delivery and planning a movie night in the common room lounge area."
+        "✨ Group 1: Computer Science Official": "The class representative announced a mandatory lecture at 2 PM today in Seminar Hall 2. Professor Mehta also shared the chapters covered in the upcoming lab evaluation.",
+        "🍔 Group 2: Hostel Block A Notice Board": "The hostel warden announced a room cleanliness inspection for tonight. Students are also voting on a Google Form to change the weekly mess menu options.",
+        "🤖 Group 3: AI/ML Coding Club": "The club lead shared a reminder that project registration closes very soon. The team is holding their weekly synchronization meeting this Sunday evening on Discord.",
+    chat_summaries = {
+        "✨ Group 1: Computer Science Official": "The class representative announced a mandatory lecture at 2 PM today in Seminar Hall 2. Professor Mehta also shared the chapters covered in the upcoming lab evaluation.",
+        "🍔 Group 2: Hostel Block A Notice Board": "The hostel warden announced a room cleanliness inspection for tonight. Students are also voting on a Google Form to change the weekly mess menu options.",
+        "🤖 Group 3: AI/ML Coding Club": "The club lead shared a reminder that project registration closes very soon. The team is holding their weekly synchronization meeting this Sunday evening on Discord.",
+        "🎨 Group 4: College Festival Team": "The festival coordinators are looking for urgent student volunteers to manage logistics. Creative banners and templates are open for edits on Canva.",
+        "🍿 Group 5: Roommates Chat (Floor 3)": "Students are pooling money to place a group food order this weekend and are organizing a movie night inside the main hostel common room lounge."
     }
 
-    st.markdown("### 📊 Live Information Matrix Board")
+    st.markdown("### 📊 Smart Stream Analysis Matrix")
     
-    # Define two main columns for our paired boxes
-    card_col1, card_col2 = st.columns(2)
-    
-    # COLUMN PAIR 1: SUMMARY & CALENDAR
-    with card_col1:
-        st.markdown('<div class="custom-matrix-card">', unsafe_allow_html=True)
-        st.markdown("#### 📝 Chat Summary")
+    # 2x2 grid layout using clear formatting columns
+    r1_c1, r1_c2 = st.columns(2)
+    with r1_c1:
+        st.markdown("#### 📝 Clean Chat Summary")
         st.info(chat_summaries[selected_stream])
         
-        st.markdown("<br>", unsafe_allow_html=True)
-        
-        st.markdown("#### 📅 Deadlines / Calendar")
-        st.caption("💖 Modify or append rows:")
-        df_dl = pd.DataFrame({"Target Deadlines": st.session_state.deadlines_store[selected_stream]})
-        edited_dl = st.data_editor(df_dl, num_rows="dynamic", use_container_width=True, key=f"dl_ed_{selected_stream}")
-        st.session_state.deadlines_store[selected_stream] = edited_dl["Target Deadlines"].tolist()
-        st.markdown('</div>', unsafe_allow_html=True)
-        
-    # COLUMN PAIR 2: ASSIGNMENTS & LINKS
-    with card_col2:
-        st.markdown('<div class="custom-matrix-card">', unsafe_allow_html=True)
-        st.markdown("#### 📚 Assignments")
-        st.caption("💖 Double-click below to modify rows:")
-        df_asg = pd.DataFrame({"Current Homework": st.session_state.assignments_store[selected_stream]})
+    with r1_c2:
+        st.markdown("#### 📚 Tracked Tasks & Homework")
+        st.caption("Double-click a cell below to edit or type custom items:")
+        df_asg = pd.DataFrame({"Your Tasks": st.session_state.assignments_store[selected_stream]})
         edited_asg = st.data_editor(df_asg, num_rows="dynamic", use_container_width=True, key=f"asg_ed_{selected_stream}")
-        st.session_state.assignments_store[selected_stream] = edited_asg["Current Homework"].tolist()
+        st.session_state.assignments_store[selected_stream] = edited_asg["Your Tasks"].tolist()
         
-        st.markdown("<br>", unsafe_allow_html=True)
+    st.markdown("<br>", unsafe_allow_html=True) # Pure clean vertical spacing
+    
+    r2_c1, r2_c2 = st.columns(2)
+    with r2_c1:
+        st.markdown("#### 📅 Calendar & Deadlines")
+        st.caption("Custom voice commands automatically drop here:")
+        df_dl = pd.DataFrame({"Deadlines": st.session_state.deadlines_store[selected_stream]})
+        edited_dl = st.data_editor(df_dl, num_rows="dynamic", use_container_width=True, key=f"dl_ed_{selected_stream}")
+        st.session_state.deadlines_store[selected_stream] = edited_dl["Deadlines"].tolist()
         
-        st.markdown("#### 🔗 Links to Join")
+    with r2_c2:
+        st.markdown("#### 🔗 Found Invitation Links")
         st.markdown(chat_links[selected_stream])
-        st.markdown('</div>', unsafe_allow_html=True)
