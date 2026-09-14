@@ -219,6 +219,7 @@ with col_right:
         st.caption("💖 Modify or append rows directly:")
         df_dl = pd.DataFrame({"Target Deadlines": st.session_state.deadlines_store[selected_stream]})
         edited_dl = st.data_editor(df_dl, num_rows="dynamic", use_container_width=True, key=f"dl_ed_{selected_stream}")st.session_state.deadlines_store[selected_stream] = edited_dl["Target Deadlines"].tolist()
+   
     with c4:
         st.markdown("#### 🔗 Links to Join")st.markdown(chat_links[selected_stream])
         
