@@ -137,14 +137,13 @@ st.markdown("""
         font-size: 1.4rem !important;
     }
 
-    /* Darker Off-White Structured Background Framing Rectangles for Matrix Pairs */
-    div.matrix-paired-card {
+    /* Target native containers to create clean, solid background squares exactly under the metrics */
+    div[data-testid="stVerticalBlockBorderWrapper"] {
         background-color: #EFECE6 !important; /* Darker off-white shading box tint */
         border: 1px solid #D1C9BC !important;
         border-radius: 16px !important;
         padding: 20px !important;
-        margin-bottom: 1.5rem !important;
-        box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);
+        box-shadow: inset 0 1px 3px rgba(0,0,0,0.02) !important;
     }
 
     /* Soft Alert Box settings */
@@ -240,7 +239,7 @@ with col_left:
         else:
             st.warning("Please input or speak an entry block first.")
 
-# --- 5. THE PAIRED STRUCTURAL INFORMATION CONNECTIONS HUB ---
+# --- 5. THE PAIRED NATIVE CONTAINER HUB ---
 with col_right:
     chat_links = {
         "✨ Group 1: Official CS Freshmen Batch '26": "• [🌐 Join Google Meet](https://google.com)\n• [💬 Join WhatsApp Subgroup](https://whatsapp.com)",
@@ -250,6 +249,7 @@ with col_right:
         "🍿 Group 5: Block-A Third Floor Wing-Mates": "• [🍿 Access Movie Vote Poll](https://forms.gle)\n• [💬 Join Snacks Run Chat](https://whatsapp.com)"
     }
     
+    chat_summaries = {
     chat_summaries = {
         "✨ Group 1: Official CS Freshmen Batch '26": "CR Rahul announced a mandatory guest lecture for today. Professor Mehta provided syllabus details regarding an upcoming lab evaluation.",
         "🍔 Group 2: Hostel Block-A Banter & Mess": "The Warden issued a clean-room directive for an active inspection happening later tonight. The community is gathering votes to adjust the culinary selections.",
@@ -263,32 +263,30 @@ with col_right:
     # Define two main columns for our paired boxes
     card_col1, card_col2 = st.columns(2)
     
-    # COLUMN PAIR 1: SUMMARY & CALENDAR
+    # COLUMN PAIR 1: SUMMARY & CALENDAR (Wrapped in a unified background square)
     with card_col1:
-        st.markdown('<div class="matrix-paired-card">', unsafe_allow_html=True)
-        st.markdown("#### 📝 Chat Summary")
-        st.info(chat_summaries[selected_stream])
+        with st.container(border=True):
+            st.markdown("#### 📝 Chat Summary")
+            st.info(chat_summaries[selected_stream])
+            
+            st.markdown("<br>", unsafe_allow_html=True)
+            
+            st.markdown("#### 📅 Deadlines / Calendar")
+            st.caption("💖 Modify or append rows:")
+            df_dl = pd.DataFrame({"Target Deadlines": st.session_state.deadlines_store[selected_stream]})
+            edited_dl = st.data_editor(df_dl, num_rows="dynamic", use_container_width=True, key=f"dl_ed_{selected_stream}")
+            st.session_state.deadlines_store[selected_stream] = edited_dl["Target Deadlines"].tolist()
         
-        st.markdown("<br>", unsafe_allow_html=True)
-        
-        st.markdown("#### 📅 Deadlines / Calendar")
-        st.caption("💖 Modify or append rows:")
-        df_dl = pd.DataFrame({"Target Deadlines": st.session_state.deadlines_store[selected_stream]})
-        edited_dl = st.data_editor(df_dl, num_rows="dynamic", use_container_width=True, key=f"dl_ed_{selected_stream}")
-        st.session_state.deadlines_store[selected_stream] = edited_dl["Target Deadlines"].tolist()
-        st.markdown('</div>', unsafe_allow_html=True)
-        
-    # COLUMN PAIR 2: ASSIGNMENTS & LINKS
+    # COLUMN PAIR 2: ASSIGNMENTS & LINKS (Wrapped in a unified background square)
     with card_col2:
-        st.markdown('<div class="matrix-paired-card">', unsafe_allow_html=True)
-        st.markdown("#### 📚 Assignments")
-        st.caption("💖 Double-click below to modify rows:")
-        df_asg = pd.DataFrame({"Current Homework": st.session_state.assignments_store[selected_stream]})
-        edited_asg = st.data_editor(df_asg, num_rows="dynamic", use_container_width=True, key=f"asg_ed_{selected_stream}")
-        st.session_state.assignments_store[selected_stream] = edited_asg["Current Homework"].tolist()
-        
-        st.markdown("<br>", unsafe_allow_html=True)
-        
-        st.markdown("#### 🔗 Links to Join")
-        st.markdown(chat_links[selected_stream])
-        st.markdown('</div>', unsafe_allow_html=True)
+        with st.container(border=True):
+            st.markdown("#### 📚 Assignments")
+            st.caption("💖 Double-click below to modify rows:")
+            df_asg = pd.DataFrame({"Current Homework": st.session_state.assignments_store[selected_stream]})
+            edited_asg = st.data_editor(df_asg, num_rows="dynamic", use_container_width=True, key=f"asg_ed_{selected_stream}")
+            st.session_state.assignments_store[selected_stream] = edited_asg["Current Homework"].tolist()
+            
+            st.markdown("<br>", unsafe_allow_html=True)
+            
+            st.markdown("#### 🔗 Links to Join")
+            st.markdown(chat_links[selected_stream])
