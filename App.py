@@ -35,7 +35,7 @@ st.markdown("""
     
     /* Top Professional University Styled Navbar - Dark Brown background with off-white text */
     .custom-navbar {
-        background-color: #3D2314; /* Elegant Dark Brown */
+        background-color: #e81376; /* Elegant Dark Brown */
         padding: 0.5rem 1.5rem;
         display: flex;
         align-items: center;
@@ -45,7 +45,7 @@ st.markdown("""
         border: 1px solid #2B180E;
     }
     .navbar-brand {
-        color: #b5074d !important; /* Off-White Text */
+        color: #f7e4dc!important; /* Off-White Text */
         font-weight: 700;
         font-size: 1.1rem;
         display: flex;
